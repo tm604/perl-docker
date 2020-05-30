@@ -3,6 +3,7 @@ FROM debian:buster as base
 # Some standard server-like config used everywhere
 ENV TZ=UTC
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PERL_VERSION="5.30.2"
 
 # For local development it's convenient to have a proxy, we'd want to drop
 # this for any real images published externally.
@@ -31,14 +32,12 @@ RUN apt-get update \
 
 # We build a recent Perl version here
 FROM builder as perl-builder
-ENV PERL_VERSION="5.30.2"
 RUN curl -L https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build | perl - --noman -j8 $PERL_VERSION /opt/perl-$PERL_VERSION/ \
  && curl -L https://cpanmin.us > /opt/perl-$PERL_VERSION/bin/cpanm \
  && chmod +x /opt/perl-$PERL_VERSION/bin/cpanm
 
 # Used for the real images
 FROM builder as module-builder
-ENV PERL_VERSION="5.30.2"
 COPY --from=perl-builder /opt/perl-$PERL_VERSION /opt/perl-$PERL_VERSION
 ENV PATH="/opt/perl-$PERL_VERSION/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/local/sbin"
 RUN mkdir -p /opt/app/
