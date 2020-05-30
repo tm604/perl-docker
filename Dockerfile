@@ -32,7 +32,7 @@ RUN apt-get update \
 
 # We build a recent Perl version here
 FROM builder as perl-builder
-RUN curl -L https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build | perl - --noman -j8 $PERL_VERSION /opt/perl-$PERL_VERSION/ \
+RUN curl -L https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build | perl - --noman -j2 $PERL_VERSION /opt/perl-$PERL_VERSION/ \
  && curl -L https://cpanmin.us > /opt/perl-$PERL_VERSION/bin/cpanm \
  && chmod +x /opt/perl-$PERL_VERSION/bin/cpanm
 
