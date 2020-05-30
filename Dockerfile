@@ -4,9 +4,10 @@ FROM debian:buster as base
 ENV TZ=UTC
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PERL_VERSION="5.30.2"
-
 # For local development it's convenient to have a proxy, we'd want to drop
 # this for any real images published externally.
+ARG DEBIAN_PROXY
+
 RUN [ -n "$DEBIAN_PROXY" ] \
   && (echo "Acquire::http::Proxy \"http://$DEBIAN_PROXY\";" > /etc/apt/apt.conf.d/30proxy) \
   && (echo "Acquire::http::Proxy::ppa.launchpad.net DIRECT;" >> /etc/apt/apt.conf.d/30proxy) \
