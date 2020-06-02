@@ -3,7 +3,7 @@ FROM debian:buster as base
 # Some standard server-like config used everywhere
 ENV TZ=UTC
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PERL_VERSION="5.30.2"
+ENV PERL_VERSION="5.30.3"
 # For local development it's convenient to have a proxy, we'd want to drop
 # this for any real images published externally.
 ARG DEBIAN_PROXY
